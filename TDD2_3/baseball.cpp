@@ -66,6 +66,18 @@ public:
 
 		GuessResult result{ false, 0,0 };
 		result.strikes = checkStrike(guessNumber);
+
+		const int QUESTION_LENGTH = 3;
+		for (int i = 0; i < QUESTION_LENGTH; ++i)
+			for(int j=0; j< QUESTION_LENGTH; ++j)
+			{
+				{
+					if (i == j) continue;
+					if (guessNumber[i] == question[j])
+						++result.balls;
+				}
+			}
+
 		return result;
 	}
 
