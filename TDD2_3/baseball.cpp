@@ -47,11 +47,27 @@ public:
 	int checkStrike(const string& guessNumber)
 	{
 		int result = 0;
-		const int QUESTION_LENGTH = 3;
 		for(int i=0; i<QUESTION_LENGTH; ++i)
 		{
 			if (guessNumber[i] == question[i])
 				++result;
+		}
+		return result;
+	}
+
+	int checkBall(const string& guessNumber)
+	{
+		int result = 0;
+		for (int i = 0; i < QUESTION_LENGTH; ++i)
+		{
+			for (int j = 0; j < QUESTION_LENGTH; ++j)
+			{
+				{
+					if (i == j) continue;
+					if (guessNumber[i] == question[j])
+						++result;
+				}
+			}
 		}
 		return result;
 	}
@@ -66,21 +82,12 @@ public:
 
 		GuessResult result{ false, 0,0 };
 		result.strikes = checkStrike(guessNumber);
-
-		const int QUESTION_LENGTH = 3;
-		for (int i = 0; i < QUESTION_LENGTH; ++i)
-			for(int j=0; j< QUESTION_LENGTH; ++j)
-			{
-				{
-					if (i == j) continue;
-					if (guessNumber[i] == question[j])
-						++result.balls;
-				}
-			}
+		result.balls = checkBall(guessNumber);
 
 		return result;
 	}
 
 private:
+	const int QUESTION_LENGTH = 3;
 	string question;
 };
