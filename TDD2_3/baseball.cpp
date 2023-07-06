@@ -44,6 +44,18 @@ public:
 		}
 	}
 
+	int checkStrike(const string& guessNumber)
+	{
+		int result = 0;
+		const int QUESTION_LENGTH = 3;
+		for(int i=0; i<QUESTION_LENGTH; ++i)
+		{
+			if (guessNumber[i] == question[i])
+				++result;
+		}
+		return result;
+	}
+
 	GuessResult guess(const string& guessNumber)
 	{
 		assertIllegalArgument(guessNumber);
@@ -51,13 +63,10 @@ public:
 		{
 			return { true, 3, 0 };
 		}
-		else if(guessNumber[0] == question[0] 
-			&& guessNumber[1] == question[1]
-			&& guessNumber[2] != question[2])
-		{
-			return { false, 2, 0 };
-		}
-		return { false, 0, 0 };
+
+		GuessResult result{ false, 0,0 };
+		result.strikes = checkStrike(guessNumber);
+		return result;
 	}
 
 private:
